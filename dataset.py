@@ -80,6 +80,10 @@ def return_data(args):
         data = torch.from_numpy(data['imgs']).unsqueeze(1).float()
         train_kwargs = {'data_tensor':data}
         dset = CustomTensorDataset
+    elif name.lower() == 'cub200':
+        root = os.path.join('/home/opt/dataset', 'CUB_images')
+        train_kwargs = {'root':root, 'transform':transform}
+        dset = CustomImageFolder
     else:
         raise NotImplementedError
 
