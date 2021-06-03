@@ -88,6 +88,8 @@ class Solver(object):
         mkdirs(self.output_dir)
 
     def train(self):
+
+        print('im in train')
         
         self.net_mode(train=True)
 
@@ -145,6 +147,7 @@ class Solver(object):
 
 
                 if self.global_iter%self.print_iter == 0:
+                    print('there should be sth')
                     self.pbar.write('[{}] vae_recon_loss:{:.3f} vae_kld:{:.3f} vae_tc_loss:{:.3f} D_tc_loss:{:.3f}'.format(
                         self.global_iter, vae_recon_loss.item(), vae_kld.item(), vae_tc_loss.item(), D_tc_loss.item()))
                     progress.display(self.global_iter)
