@@ -5,7 +5,7 @@ import numpy as np
 import torch
 
 from solver import Solver
-from utils import str2bool
+from utils import str2bool, AverageMeter, ProgressMeter
 
 torch.backends.cudnn.enabled = True
 torch.backends.cudnn.benchmark = True
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     parser.add_argument('--viz_ra_iter', default=10000, type=int, help='visdom recon image applying iter')
     parser.add_argument('--viz_ta_iter', default=10000, type=int, help='visdom traverse applying iter')
 
-    parser.add_argument('--print_iter', default=500, type=int, help='print losses iter')
+    parser.add_argument('--print_iter', default=50, type=int, help='print losses iter')
 
     parser.add_argument('--ckpt_dir', default='checkpoints', type=str, help='checkpoint directory')
     parser.add_argument('--ckpt_load', default=None, type=str, help='checkpoint name to load')

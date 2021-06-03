@@ -2,6 +2,7 @@
 
 import os
 import visdom
+import time
 from tqdm import tqdm
 
 import torch
@@ -87,14 +88,27 @@ class Solver(object):
         mkdirs(self.output_dir)
 
     def train(self):
+        
         self.net_mode(train=True)
 
         ones = torch.ones(self.batch_size, dtype=torch.long, device=self.device)
         zeros = torch.zeros(self.batch_size, dtype=torch.long, device=self.device)
 
         out = False
+
         while not out:
+            batch_time = AverageMeter('Time', ':6.3f')
+            data_time = AverageMeter('Data', ':6.3f')
+            vae_losses = AverageMeter('vae_loss', ':.4e')
+            D_tc_losses = AverageMeter('D_tc_loss', ':.4e')
+            progress = ProgressMeter(
+                len(train_loader),
+                [batch_time, data_time, vae_losses, D_tc_losses,],
+                prefix="Iter: [{}]".format(self.global_iter))
+
+            end = time.time()
             for x_true1, x_true2 in self.data_loader:
+                data_time.update(time.time() - end)
                 self.global_iter += 1
                 self.pbar.update(1)
 
@@ -108,6 +122,8 @@ class Solver(object):
 
                 vae_loss = vae_recon_loss + vae_kld + self.gamma*vae_tc_loss
 
+                vae_losses.update(vae_loss.item(), x_true1.size(0))
+
                 self.optim_VAE.zero_grad()
                 vae_loss.backward(retain_graph=True)
                 self.optim_VAE.step()
@@ -118,13 +134,20 @@ class Solver(object):
                 D_z_pperm = self.D(z_pperm)
                 D_tc_loss = 0.5*(F.cross_entropy(D_z, zeros) + F.cross_entropy(D_z_pperm, ones))
 
+                D_tc_losses.update(D_tc_loss.item(), x_true2.size(0))
+
                 self.optim_D.zero_grad()
                 D_tc_loss.backward()
                 self.optim_D.step()
 
+                batch_time.update(time.time() - end)
+                end = time.time()
+
+
                 if self.global_iter%self.print_iter == 0:
                     self.pbar.write('[{}] vae_recon_loss:{:.3f} vae_kld:{:.3f} vae_tc_loss:{:.3f} D_tc_loss:{:.3f}'.format(
                         self.global_iter, vae_recon_loss.item(), vae_kld.item(), vae_tc_loss.item(), D_tc_loss.item()))
+                    progress.display(self.global_iter)
 
                 if self.global_iter%self.ckpt_save_iter == 0:
                     self.save_checkpoint(self.global_iter)
