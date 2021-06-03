@@ -84,6 +84,7 @@ def return_data(args):
         root = os.path.join('/home/opt/dataset', 'CUB_images')
         train_kwargs = {'root':root, 'transform':transform}
         dset = CustomImageFolder
+        print("dset is cub200!")
     else:
         raise NotImplementedError
 
@@ -97,4 +98,5 @@ def return_data(args):
                               drop_last=True)
 
     data_loader = train_loader
+    print('data_loader built!')
     return data_loader
