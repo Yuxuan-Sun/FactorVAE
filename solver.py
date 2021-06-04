@@ -104,7 +104,7 @@ class Solver(object):
             vae_losses = AverageMeter('vae_loss', ':.4e')
             D_tc_losses = AverageMeter('D_tc_loss', ':.4e')
             progress = ProgressMeter(
-                len(train_loader),
+                len(self.data_loader),
                 [batch_time, data_time, vae_losses, D_tc_losses,],
                 prefix="Iter: [{}]".format(self.global_iter))
 
