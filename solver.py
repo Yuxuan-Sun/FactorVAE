@@ -10,7 +10,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 from torchvision.utils import make_grid, save_image
 
-from utils import DataGather, mkdirs, grid2gif
+from utils import DataGather, mkdirs, grid2gif, AverageMeter, ProgressMeter
 from ops import recon_loss, kl_divergence, permute_dims
 from model import FactorVAE1, FactorVAE2, Discriminator
 from dataset import return_data
