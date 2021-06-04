@@ -140,6 +140,8 @@ class Solver(object):
 
                 torch.autograd.set_detect_anomaly(True)
 
+                print(D_tc_loss.shape)
+                exit()
                 self.optim_D.zero_grad()
                 D_tc_loss.backward()
                 self.optim_D.step()
