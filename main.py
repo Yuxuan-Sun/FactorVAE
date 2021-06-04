@@ -54,7 +54,7 @@ if __name__ == "__main__":
 
     parser.add_argument('--ckpt_dir', default='checkpoints', type=str, help='checkpoint directory')
     parser.add_argument('--ckpt_load', default=None, type=str, help='checkpoint name to load')
-    parser.add_argument('--ckpt_save_iter', default=100, type=int, help='checkpoint save iter')
+    parser.add_argument('--ckpt_save_iter', default=10000, type=int, help='checkpoint save iter')
 
     parser.add_argument('--output_dir', default='outputs', type=str, help='output directory')
     parser.add_argument('--output_save', default=True, type=str2bool, help='whether to save traverse results')
