@@ -130,22 +130,22 @@ class Solver(object):
                 vae_loss.backward(retain_graph=True)
                 self.optim_VAE.step()
 
-                with torch.autograd.set_detect_anomaly(True):
+                
 
-                    x_true2 = x_true2.to(self.device)
-                    z_prime = self.VAE(x_true2, no_dec=True)
-                    z_pperm = permute_dims(z_prime).detach()
-                    D_z_pperm = self.D(z_pperm)
-                    D_tc_loss = 0.5*(F.cross_entropy(D_z, zeros) + F.cross_entropy(D_z_pperm, ones))
+                x_true2 = x_true2.to(self.device)
+                z_prime = self.VAE(x_true2, no_dec=True)
+                z_pperm = permute_dims(z_prime).detach()
+                D_z_pperm = self.D(z_pperm)
+                D_tc_loss = 0.5*(F.cross_entropy(D_z, zeros) + F.cross_entropy(D_z_pperm, ones))
 
-                    # D_tc_losses.update(D_tc_loss.item(), x_true2.size(0))
+                # D_tc_losses.update(D_tc_loss.item(), x_true2.size(0))
 
 
-                    print(D_tc_loss)
-                    # exit()
-                    self.optim_D.zero_grad()
-                    D_tc_loss.backward()
-                    self.optim_D.step()
+                print(D_tc_loss)
+                # exit()
+                self.optim_D.zero_grad()
+                D_tc_loss.backward()
+                self.optim_D.step()
 
                 batch_time.update(time.time() - end)
                 end = time.time()
