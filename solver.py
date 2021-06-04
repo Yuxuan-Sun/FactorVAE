@@ -136,7 +136,7 @@ class Solver(object):
                 D_z_pperm = self.D(z_pperm)
                 D_tc_loss = 0.5*(F.cross_entropy(D_z, zeros) + F.cross_entropy(D_z_pperm, ones))
 
-                D_tc_losses.update(D_tc_loss.item(), x_true2.size(0))
+                # D_tc_losses.update(D_tc_loss.item(), x_true2.size(0))
 
                 self.optim_D.zero_grad()
                 D_tc_loss.backward()
