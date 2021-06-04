@@ -128,7 +128,7 @@ class Solver(object):
 
                 self.optim_VAE.zero_grad()
                 vae_loss.backward(retain_graph=True)
-                self.optim_VAE.step()
+                # self.optim_VAE.step()
 
                 
 
@@ -145,6 +145,7 @@ class Solver(object):
                 # exit()
                 self.optim_D.zero_grad()
                 D_tc_loss.backward()
+                self.optim_VAE.step()
                 self.optim_D.step()
 
                 batch_time.update(time.time() - end)
