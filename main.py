@@ -38,7 +38,7 @@ if __name__ == "__main__":
     parser.add_argument('--beta1_D', default=0.5, type=float, help='beta1 parameter of the Adam optimizer for the discriminator')
     parser.add_argument('--beta2_D', default=0.9, type=float, help='beta2 parameter of the Adam optimizer for the discriminator')
 
-    parser.add_argument('--dset_dir', default='/cv_data/204_data/public', type=str, help='dataset directory')
+    parser.add_argument('--dset_dir', default='/home/opt/dataset', type=str, help='dataset directory')
     parser.add_argument('--dataset', default='CelebA', type=str, help='dataset name')
     parser.add_argument('--image_size', default=64, type=int, help='image size. now only (64,64) is supported')
     parser.add_argument('--num_workers', default=2, type=int, help='dataloader num_workers')

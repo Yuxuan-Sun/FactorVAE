@@ -8,4 +8,5 @@ python main.py --dataset cub200 --num_workers 4 --batch_size 64 \
                --lr_VAE 1e-4 --beta1_VAE 0.9 --beta2_VAE 0.999 \
                --lr_D 1e-5 --beta1_D 0.5 --beta2_D 0.9 \
                --name $1 --z_dim 10 --gamma 3.2 --ckpt_load last \
-               --ckpt_dir /home/sunyx30/FactorVAE/checkpoints
+               --ckpt_dir /home/FactorVAE/checkpoints \
+               --dset_dir /home/opt/dataset
