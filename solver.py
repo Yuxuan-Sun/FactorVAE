@@ -353,6 +353,7 @@ class Solver(object):
                             opts=dict(title=title), nrow=len(interpolation))
 
         if self.output_save:
+            print("im in save")
             output_dir = os.path.join(self.output_dir, str(self.global_iter))
             mkdirs(output_dir)
             gifs = torch.cat(gifs)
@@ -360,7 +361,7 @@ class Solver(object):
             for i, key in enumerate(Z.keys()):
                 for j, val in enumerate(interpolation):
                     save_image(tensor=gifs[i][j].cpu(),
-                               filename=os.path.join(output_dir, '{}_{}.jpg'.format(key, j)),
+                               fp=os.path.join(output_dir, '{}_{}.jpg'.format(key, j)),
                                nrow=self.z_dim, pad_value=1)
 
                 grid2gif(str(os.path.join(output_dir, key+'*.jpg')),
@@ -428,6 +429,7 @@ class Solver(object):
     def load_checkpoint(self, ckptname='last', verbose=True):
         if ckptname == 'last':
             ckpts = os.listdir(self.ckpt_dir)
+            print(self.ckpt_dir)
             if not ckpts:
                 if verbose:
                     self.pbar.write("=> no checkpoint found")
